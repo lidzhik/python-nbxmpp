@@ -1,3 +1,5 @@
+Forked from https://dev.gajim.org/gajim/python-nbxmpp/
+
 # Welcome to python-nbxmpp
 
 `python-nbxmpp` is a Python library that provides a way for Python applications to use the XMPP network. This library was initially a fork of `xmpppy`.
