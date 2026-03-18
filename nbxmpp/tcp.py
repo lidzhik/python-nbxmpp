@@ -179,20 +179,18 @@ class TCPConnection(Connection):
 
     def start_tls_negotiation(self) -> None:
         self._log.info("Start TLS negotiation")
-
         self._tls_handshake_in_progress = True
-        self._log.info("start_tls_negotiation: _tls_handshake_in_progress = True")
-
         remote_address = self._con.get_remote_address()
-        self._log.info("start_tls_negotiation: get remote_address")
-
         identity = Gio.NetworkAddress.new(
             self._address.domain, remote_address.props.port
         )
         self._log.info("start_tls_negotiation: set identity %s %s", self._address.domain, remote_address.props.port)
 
-        self._tls_con = Gio.TlsClientConnection.new(self._con, identity)
-        self._log.info("start_tls_negotiation: _tls_con = Gio.TlsClientConnection")
+        try:
+            self._tls_con = Gio.TlsClientConnection.new(self._con, identity)
+            self._log.info("start_tls_negotiation: _tls_con = Gio.TlsClientConnection")
+        except GLib.Error as error:
+            self._log.info("Gio.TlsClientConnection.new: %s", error.message)
 
         if self._address.type == ConnectionType.DIRECT_TLS:
             self._tls_con.set_advertised_protocols(["xmpp-client"])
