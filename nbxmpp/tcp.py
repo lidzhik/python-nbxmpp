@@ -179,18 +179,29 @@ class TCPConnection(Connection):
 
     def start_tls_negotiation(self) -> None:
         self._log.info("Start TLS negotiation")
+
         self._tls_handshake_in_progress = True
+        self._log.info("start_tls_negotiation: _tls_handshake_in_progress = True")
+
         remote_address = self._con.get_remote_address()
+        self._log.info("start_tls_negotiation: get remote_address")
+
         identity = Gio.NetworkAddress.new(
             self._address.domain, remote_address.props.port
         )
+        self._log.info("start_tls_negotiation: set identity %s %s", self._address.domain, remote_address.props.port)
 
         self._tls_con = Gio.TlsClientConnection.new(self._con, identity)
+        self._log.info("start_tls_negotiation: _tls_con = Gio.TlsClientConnection")
 
         if self._address.type == ConnectionType.DIRECT_TLS:
             self._tls_con.set_advertised_protocols(["xmpp-client"])
+
         self._tls_con.connect("accept-certificate", self._check_certificate)
+        self._log.info("start_tls_negotiation: set accept-certificate")
+
         self._tls_con.connect("notify::peer-certificate", self._on_certificate_set)
+        self._log.info("start_tls_negotiation: set notify::peer-certificate")
 
         # This Wraps the Gio.TlsClientConnection and the Gio.Socket together
         # so we get back a Gio.SocketConnection
