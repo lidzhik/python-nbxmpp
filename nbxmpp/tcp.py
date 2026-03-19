@@ -184,22 +184,14 @@ class TCPConnection(Connection):
         identity = Gio.NetworkAddress.new(
             self._address.domain, remote_address.props.port
         )
-        self._log.info("start_tls_negotiation: set identity %s %s", self._address.domain, remote_address.props.port)
 
-        try:
-            self._tls_con = Gio.TlsClientConnection.new(self._con, identity)
-            self._log.info("start_tls_negotiation: _tls_con = Gio.TlsClientConnection")
-        except GLib.Error as error:
-            self._log.info("Gio.TlsClientConnection.new: %s", error.message)
+        self._tls_con = Gio.TlsClientConnection.new(self._con, identity)
 
         if self._address.type == ConnectionType.DIRECT_TLS:
             self._tls_con.set_advertised_protocols(["xmpp-client"])
 
         self._tls_con.connect("accept-certificate", self._check_certificate)
-        self._log.info("start_tls_negotiation: set accept-certificate")
-
         self._tls_con.connect("notify::peer-certificate", self._on_certificate_set)
-        self._log.info("start_tls_negotiation: set notify::peer-certificate")
 
         # This Wraps the Gio.TlsClientConnection and the Gio.Socket together
         # so we get back a Gio.SocketConnection
