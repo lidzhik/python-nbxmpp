@@ -189,7 +189,6 @@ class TCPConnection(Connection):
 
         if self._address.type == ConnectionType.DIRECT_TLS:
             self._tls_con.set_advertised_protocols(["xmpp-client"])
-
         self._tls_con.connect("accept-certificate", self._check_certificate)
         self._tls_con.connect("notify::peer-certificate", self._on_certificate_set)
 

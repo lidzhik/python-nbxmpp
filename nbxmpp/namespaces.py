@@ -73,6 +73,7 @@ class _Namespaces:
     HTTPUPLOAD_0: str = "urn:xmpp:http:upload:0"
     HTTP_AUTH: str = "http://jabber.org/protocol/http-auth"
     IBB: str = "http://jabber.org/protocol/ibb"
+    IBR_TOKEN = "urn:xmpp:ibr-token:0"  # noqa: S105
     IDLE: str = "urn:xmpp:idle:1"
     JINGLE: str = "urn:xmpp:jingle:1"
     JINGLE_BYTESTREAM: str = "urn:xmpp:jingle:transports:s5b:1"
@@ -119,7 +120,9 @@ class _Namespaces:
     OPENPGP: str = "urn:xmpp:openpgp:0"
     OPENPGP_PK: str = "urn:xmpp:openpgp:0:public-keys"
     OPENPGP_SK: str = "urn:xmpp:openpgp:0:secret-key"
+    PARS: str = "urn:xmpp:pars:0"
     PING: str = "urn:xmpp:ping"
+    PRE_APPROVAL: str = "urn:xmpp:features:pre-approval"
     PRIVACY: str = "jabber:iq:privacy"
     PRIVATE: str = "jabber:iq:private"
     PUBKEY_ATTEST: str = "urn:xmpp:attest:2"

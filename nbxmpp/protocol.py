@@ -2026,8 +2026,14 @@ class Features(Node):
     def has_roster_version(self) -> bool:
         return self.getTag("ver", namespace=Namespace.ROSTER_VER) is not None
 
+    def has_pre_approval(self) -> bool:
+        return self.getTag("sub", namespace=Namespace.PRE_APPROVAL) is not None
+
     def has_register(self) -> bool:
         return self.getTag("register", namespace=Namespace.REGISTER_FEATURE) is not None
+
+    def has_ibr_token(self) -> bool:
+        return self.getTag("register", namespace=Namespace.IBR_TOKEN) is not None
 
     def has_anonymous(self) -> bool:
         return "ANONYMOUS" in self.get_mechs()
